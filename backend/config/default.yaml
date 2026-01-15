@@ -17,16 +17,20 @@ output:
   sharpen_preset: "mild" # mild | medium | strong
 
 layout:
-  gameplay_height: 1400
-  facecam_height: 520
+  gameplay_height: 1350
+  facecam_height: 570
 
 facecam_crop:
   # Based on your screenshot (bottom-right facecam)
   corner: "bottom_right"
   w_ratio: 0.20
-  h_ratio: 0.4
+  h_ratio: 0.3
   x_offset_px: 34
-  y_offset_px: 18
+  y_offset_px: 63
+
+gameplay_source_crop:
+  top_px: 100
+  bottom_px: 100
 
 clips:
   count: 2
@@ -68,18 +72,10 @@ face_motion:
   weight: 0.8              # 0.5–1.2 range; higher = more reaction-based
   smooth_sec: 5            # smooth motion curve
 
-gameplay_source_crop:
-  top_px: 0
-  bottom_px: 100
-
 story_hook:
   enabled: true
   hook_sec: 2.0          # teaser length at beginning
   transition_sec: 0.20   # fade between teaser and main
-
-story_hook:
-  enabled: true
-  hook_sec: 2.0
   strategy: "combined"   # loudest | motion | combined
   min_rms: 0.00         # tweak after one run
   search_tail_sec: 55   # only search the last N seconds for climax (common for Shorts)

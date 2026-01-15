@@ -1,4 +1,4 @@
 .venv
 clips_out
 temp
-__pycache__
+backend/pipeline/__pycache__
