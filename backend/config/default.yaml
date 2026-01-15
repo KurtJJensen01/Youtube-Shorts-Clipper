@@ -1,0 +1,78 @@
+watch:
+  # Leave as null to auto-detect your Downloads folder
+  downloads_dir: null
+  file_extensions: [".mp4", ".mov", ".mkv"]
+  stable_seconds: 8
+
+output:
+  out_dir: "clips_out"
+  temp_dir: "temp"
+  width: 1080
+  height: 1920
+  fps: 30
+  crf: 20
+  preset: "veryfast"
+  fade_sec: 0.25
+  sharpen: false
+  sharpen_preset: "mild" # mild | medium | strong
+
+layout:
+  gameplay_height: 1400
+  facecam_height: 520
+
+facecam_crop:
+  # Based on your screenshot (bottom-right facecam)
+  corner: "bottom_right"
+  w_ratio: 0.20
+  h_ratio: 0.4
+  x_offset_px: 34
+  y_offset_px: 18
+
+clips:
+  count: 2
+  min_gap_sec: 75
+  min_dur_sec: 35
+  max_dur_sec: 55
+  pre_search_sec: 18       # how far back from peak we search for the “start”
+  min_leadin_sec: 3        # don't start too close to the peak
+  end_silence_run_sec: 3   # end clip after N consecutive “quiet” seconds (after min duration)
+  silence_percentile: 30   # threshold is this percentile of RMS (adaptive)
+  max_silence_frac: 0.25   # reject if >25% of seconds in the clip are below threshold
+
+boring_filter:
+  # Freeze detection
+  detect_freeze: true
+  freeze_fps: 2                 # analyze at 2 fps for speed
+  freeze_noise: 0.003           # lower = more sensitive
+  freeze_min_dur_sec: 2.0       # only count freezes >= 2s
+  max_freeze_overlap_sec: 4.0   # reject clips with >4s of freeze time
+
+  # Scene-change density (optional)
+  detect_scene: false
+  scene_fps: 2
+  scene_threshold: 0.35
+  min_scene_changes: 1          # reject clips with <1 detected change
+
+captions:
+  enabled: false
+  burn_in: true
+  model: "small"          # tiny | small | medium (start with small)
+  compute_type: "int8"    # int8 is faster on CPU
+  style: "FontName=Arial,FontSize=15,Outline=2,Shadow=1,Alignment=2,MarginV=40"
+  ass_font: "Arial"
+  ass_font_size: 44
+
+face_motion:
+  enabled: false
+  sample_fps: 3            # 2–5 is typical
+  weight: 0.8              # 0.5–1.2 range; higher = more reaction-based
+  smooth_sec: 5            # smooth motion curve
+
+gameplay_source_crop:
+  top_px: 0
+  bottom_px: 100
+
+story_hook:
+  enabled: true
+  hook_sec: 2.0          # teaser length at beginning
+  transition_sec: 0.20   # fade between teaser and main
