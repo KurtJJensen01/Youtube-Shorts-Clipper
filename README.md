@@ -1,0 +1,1 @@
+python -m backend.app --input "FILE PATH"

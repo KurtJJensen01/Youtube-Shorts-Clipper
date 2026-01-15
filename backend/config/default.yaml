@@ -76,3 +76,11 @@ story_hook:
   enabled: true
   hook_sec: 2.0          # teaser length at beginning
   transition_sec: 0.20   # fade between teaser and main
+
+story_hook:
+  enabled: true
+  hook_sec: 2.0
+  strategy: "combined"   # loudest | motion | combined
+  min_rms: 0.00         # tweak after one run
+  search_tail_sec: 55   # only search the last N seconds for climax (common for Shorts)
+
