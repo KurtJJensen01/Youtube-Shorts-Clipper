@@ -3,8 +3,48 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
-FFMPEG = r"C:\Users\hocke\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin\ffmpeg.exe"
-FFPROBE = r"C:\Users\hocke\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.0.1-full_build\bin\ffprobe.exe"
+import os
+import shutil
+from pathlib import Path
+
+# Auto-detect FFmpeg and FFprobe
+def get_ffmpeg_path():
+    """Find ffmpeg executable, checking environment variable first, then PATH"""
+    # Check if user set custom path via environment variable
+    custom = os.environ.get('FFMPEG')
+    if custom and Path(custom).exists():
+        return custom
+    
+    # Try to find in system PATH
+    ffmpeg = shutil.which('ffmpeg')
+    if ffmpeg:
+        return ffmpeg
+    
+    raise FileNotFoundError(
+        "FFmpeg not found. Please install FFmpeg and ensure it's in your PATH, "
+        "or set the FFMPEG environment variable to point to the ffmpeg executable."
+    )
+
+def get_ffprobe_path():
+    """Find ffprobe executable, checking environment variable first, then PATH"""
+    # Check if user set custom path via environment variable
+    custom = os.environ.get('FFPROBE')
+    if custom and Path(custom).exists():
+        return custom
+    
+    # Try to find in system PATH
+    ffprobe = shutil.which('ffprobe')
+    if ffprobe:
+        return ffprobe
+    
+    raise FileNotFoundError(
+        "FFprobe not found. Please install FFmpeg and ensure it's in your PATH, "
+        "or set the FFPROBE environment variable to point to the ffprobe executable."
+    )
+
+# Get paths dynamically
+FFMPEG = get_ffmpeg_path()
+FFPROBE = get_ffprobe_path()
 
 
 def _run(cmd: list[str]) -> None:
