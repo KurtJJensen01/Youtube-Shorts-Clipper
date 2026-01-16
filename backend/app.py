@@ -419,10 +419,32 @@ def main() -> None:
     args = parser.parse_args()
     
     cfg = _load_config()
-    video_path = Path(args.input).expanduser().resolve()
-
+    
+    # Clean up input path
+    input_path = args.input.strip().strip('"').strip("'")
+    video_path = Path(input_path).expanduser().resolve()
+    
+    # Check if file exists
     if not video_path.exists():
+        print(f"\n[Error] Cannot find the video file.")
+        print(f"Looking for: {video_path}")
+        
+        if video_path.parent.exists():
+            print(f"\nFiles in {video_path.parent.name}:")
+            for f in sorted(video_path.parent.iterdir()):
+                if f.is_file():
+                    print(f"  - {f.name}")
+        
         raise FileNotFoundError(f"Input file not found: {video_path}")
+    
+    # Check if it's a supported video format
+    supported_extensions = {'.mp4', '.mov', '.mkv', '.avi', '.MP4', '.MOV', '.MKV', '.AVI'}
+    if video_path.suffix not in supported_extensions:
+        print(f"\n[Warning] '{video_path.suffix}' may not be a supported video format.")
+        print(f"Supported formats: {', '.join(sorted(supported_extensions))}")
+        response = input("Continue anyway? (y/n): ")
+        if response.lower() != 'y':
+            return
 
     process_video(video_path, cfg, delete_original=args.delete)
 
