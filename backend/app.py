@@ -449,9 +449,9 @@ def main() -> None:
     process_video(video_path, cfg, delete_original=args.delete)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except FileNotFoundError:
-        print("\n[Error] The file path provided is incorrect. Please check the name and try again.")
-    except Exception as e:
-        print(f"\n[Unexpected Error] {e}")
+    #try:
+    main()
+    #except FileNotFoundError:
+        #print("\n[Error] The file path provided is incorrect. Please check the name and try again.")
+    #except Exception as e:
+        #print(f"\n[Unexpected Error] {e}")
